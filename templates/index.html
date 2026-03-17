@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enhanced Zero-DCE | AI Low-Light Enhancer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-gradient: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            --card-bg: rgba(255,255,255,0.08);
+            --text-color: white;
+            --button-gradient: linear-gradient(135deg, #00ff87, #00d4ff);
+            --enhanced-color: #00ff87;
+        }
+
+        body.light {
+            --bg-gradient: linear-gradient(135deg, #74ebd5, #acb6e5);
+            --card-bg: white;
+            --text-color: #2c3e50;
+            --button-gradient: linear-gradient(135deg, #ff7eb3, #ff758c);
+            --enhanced-color: #ff758c;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--bg-gradient);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            color: var(--text-color);
+            transition: 0.4s ease;
+        }
+
+        /* Toggle Icon Button */
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 28px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            transition: transform 0.3s ease;
+            z-index: 1000;
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.2);
+        }
+
+        /* Title */
+        .title-section {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .title-section h1 {
+            font-size: 42px;
+            margin-bottom: 10px;
+            font-weight: 700;
+            background: var(--button-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .title-section p {
+            font-size: 18px;
+            opacity: 0.8;
+            font-weight: 300;
+        }
+
+        /* Container */
+        .container {
+            width: 80%;
+            max-width: 1000px;
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+            text-align: center;
+        }
+
+        /* Upload Section */
+        .upload-section {
+            margin-bottom: 30px;
+        }
+
+        .upload-area {
+            border: 3px dashed rgba(0, 212, 255, 0.5);
+            border-radius: 15px;
+            padding: 40px;
+            margin: 20px 0;
+            background: rgba(0, 212, 255, 0.05);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        body.light .upload-area {
+            border-color: rgba(255, 117, 140, 0.5);
+            background: rgba(255, 117, 140, 0.05);
+        }
+
+        .upload-area:hover {
+            border-color: var(--enhanced-color);
+            background: rgba(0, 212, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        body.light .upload-area:hover {
+            background: rgba(255, 117, 140, 0.1);
+        }
+
+        .upload-area.dragover {
+            border-color: var(--enhanced-color);
+            background: rgba(0, 212, 255, 0.15);
+        }
+
+        .upload-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+
+        .file-input {
+            display: none;
+        }
+
+        .upload-btn {
+            display: inline-block;
+            padding: 15px 30px;
+            background: var(--button-gradient);
+            color: black;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 16px;
+            transition: 0.3s;
+            border: none;
+            margin-top: 15px;
+        }
+
+        .upload-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(0, 212, 255, 0.3);
+        }
+
+        /* Enhance Button */
+        .enhance-btn {
+            background: var(--button-gradient);
+            color: black;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+            margin: 20px auto;
+            display: block;
+            min-width: 200px;
+        }
+
+        .enhance-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(0, 212, 255, 0.3);
+        }
+
+        .enhance-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Processing */
+        .processing {
+            text-align: center;
+            padding: 30px;
+            display: none;
+        }
+
+        .spinner {
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top: 4px solid var(--enhanced-color);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Results */
+        .image-result {
+            display: none;
+            margin-top: 40px;
+        }
+
+        .result-container {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .image-box {
+            text-align: center;
+        }
+
+        .image-box h3 {
+            margin-bottom: 15px;
+            font-weight: 600;
+            font-size: 20px;
+        }
+
+        .image-box img {
+            max-width: 400px;
+            width: 100%;
+            height: auto;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .image-box img:hover {
+            transform: scale(1.02);
+        }
+
+        /* Messages */
+        .info-message {
+            background: rgba(0, 212, 255, 0.1);
+            border-left: 4px solid #00d4ff;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+
+        .error-message {
+            background: rgba(255, 117, 140, 0.1);
+            border-left: 4px solid #ff758c;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 8px;
+            color: #ff758c;
+        }
+
+        .success-message {
+            background: rgba(0, 255, 135, 0.1);
+            border-left: 4px solid var(--enhanced-color);
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 8px;
+            color: var(--enhanced-color);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .result-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .title-section h1 {
+                font-size: 32px;
+            }
+            
+            .container {
+                width: 90%;
+                padding: 25px;
+            }
+            
+            .image-box img {
+                max-width: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Sun/Moon Toggle Button -->
+<button class="theme-toggle" onclick="toggleTheme()" id="themeIcon">
+    🌙
+</button>
+
+<div class="title-section">
+    <h1>Enhanced Zero-DCE</h1>
+    <p>🚀 Advanced AI Low-Light Enhancement with 5 Major Innovations</p>
+</div>
+
+<div class="container">
+    <div class="upload-section">
+        <div class="upload-area" id="uploadArea">
+            <div class="upload-icon">📸</div>
+            <p>Drag & drop your image here or click to browse</p>
+            <p style="font-size: 0.9em; opacity: 0.7; margin-top: 10px;">
+                Supports: JPG, PNG, JPEG (Max 16MB)
+            </p>
+            <input type="file" id="fileInput" class="file-input" accept="image/*">
+            <button class="upload-btn" onclick="document.getElementById('fileInput').click()">
+                Choose Image
+            </button>
+        </div>
+    </div>
+
+    <button class="enhance-btn" id="enhanceBtn" onclick="enhanceImage()" disabled>
+        ✨ Enhance Image
+    </button>
+
+    <div id="processing" class="processing">
+        <div class="spinner"></div>
+        <p>Enhancing your image with Enhanced Zero-DCE...</p>
+        <p style="font-size: 0.9em; opacity: 0.7;">This may take a few seconds</p>
+    </div>
+
+    <div id="messageArea"></div>
+
+    <div id="imageResult" class="image-result">
+        <h2>🎯 Enhancement Results</h2>
+        <div class="result-container">
+            <div class="image-box">
+                <h3>📷 Original</h3>
+                <img id="originalImage" alt="Original">
+            </div>
+            <div class="image-box">
+                <h3 style="color: var(--enhanced-color);">✨ Enhanced</h3>
+                <img id="enhancedImage" alt="Enhanced">
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    let currentImage = null;
+    const uploadArea = document.getElementById('uploadArea');
+    const fileInput = document.getElementById('fileInput');
+    const enhanceBtn = document.getElementById('enhanceBtn');
+    const processing = document.getElementById('processing');
+    const imageResult = document.getElementById('imageResult');
+    const messageArea = document.getElementById('messageArea');
+
+    // Load saved theme on page load
+    window.onload = function() {
+        const savedTheme = localStorage.getItem("theme");
+        if (savedTheme === "light") {
+            document.body.classList.add("light");
+            document.getElementById("themeIcon").textContent = "☀️";
+        }
+    }
+
+    // Toggle function
+    function toggleTheme() {
+        document.body.classList.toggle("light");
+
+        const isLight = document.body.classList.contains("light");
+        const icon = document.getElementById("themeIcon");
+
+        if (isLight) {
+            localStorage.setItem("theme", "light");
+            icon.textContent = "☀️";
+        } else {
+            localStorage.setItem("theme", "dark");
+            icon.textContent = "🌙";
+        }
+    }
+
+    // Drag and drop functionality
+    uploadArea.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        uploadArea.classList.add('dragover');
+    });
+
+    uploadArea.addEventListener('dragleave', () => {
+        uploadArea.classList.remove('dragover');
+    });
+
+    uploadArea.addEventListener('drop', (e) => {
+        e.preventDefault();
+        uploadArea.classList.remove('dragover');
+        
+        const files = e.dataTransfer.files;
+        if (files.length > 0) {
+            handleFile(files[0]);
+        }
+    });
+
+    fileInput.addEventListener('change', (e) => {
+        if (e.target.files.length > 0) {
+            handleFile(e.target.files[0]);
+        }
+    });
+
+    function handleFile(file) {
+        if (!file.type.startsWith('image/')) {
+            showMessage('Please upload an image file', 'error');
+            return;
+        }
+
+        if (file.size > 16 * 1024 * 1024) {
+            showMessage('File size must be less than 16MB', 'error');
+            return;
+        }
+
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            currentImage = e.target.result;
+            document.getElementById('originalImage').src = currentImage;
+            enhanceBtn.disabled = false;
+            showMessage('✅ Image loaded successfully! Ready to enhance.', 'success');
+        };
+        reader.readAsDataURL(file);
+    }
+
+    function showMessage(message, type = 'info') {
+        messageArea.innerHTML = '';
+        const messageDiv = document.createElement('div');
+        messageDiv.className = `${type}-message`;
+        messageDiv.textContent = message;
+        messageArea.appendChild(messageDiv);
+        
+        setTimeout(() => {
+            messageDiv.style.opacity = '0';
+            setTimeout(() => messageDiv.remove(), 300);
+        }, 5000);
+    }
+
+    function showProcessing(show) {
+        processing.style.display = show ? 'block' : 'none';
+        enhanceBtn.disabled = show;
+    }
+
+    async function enhanceImage() {
+        if (!currentImage) return;
+
+        showProcessing(true);
+        const method = 'enhanced_zerodce'; // Fixed method since controls were removed
+        
+        // Show warning for enhanced Zero-DCE
+        showMessage('🚀 Using Enhanced Zero-DCE with your innovations! This includes multi-scale features, attention mechanism, and adaptive learning.', 'info');
+
+        try {
+            const response = await fetch('/enhance_image', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    image: currentImage,
+                    method: method
+                })
+            });
+
+            const result = await response.json();
+
+            if (result.success) {
+                document.getElementById('enhancedImage').src = result.enhanced_image;
+                imageResult.style.display = 'block';
+                showMessage('🎉 Image enhanced successfully with Enhanced Zero-DCE!', 'success');
+                
+                // Scroll to results
+                imageResult.scrollIntoView({ behavior: 'smooth' });
+            } else {
+                showMessage('❌ Enhancement failed: ' + result.error, 'error');
+            }
+        } catch (error) {
+            showMessage('❌ Network error: ' + error.message, 'error');
+        } finally {
+            showProcessing(false);
+        }
+    }
+</script>
+
+</body>
+</html>

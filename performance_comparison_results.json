@@ -1,0 +1,196 @@
+{
+  "summary": {
+    "average_improvements": {
+      "ssim": 0.1230138262997245,
+      "psnr": 21.991136732345275,
+      "brightness": -1645.6488130298626,
+      "contrast": -1104.6657817815399,
+      "time": -0.23595633506774902
+    },
+    "better_metrics_count": "2",
+    "overall_winner": "original"
+  },
+  "detailed_results": [
+    {
+      "image": "611.png",
+      "results": {
+        "enhanced": {
+          "time": 0.7318010330200195,
+          "metrics": {
+            "ssim": 0.21640554190574685,
+            "psnr": 21.566614897575086,
+            "brightness_improvement": -100.0,
+            "contrast_improvement": -100.0,
+            "original_brightness": 16.6783375,
+            "enhanced_brightness": 0.0
+          },
+          "success": true
+        },
+        "original": {
+          "time": 0.045360565185546875,
+          "metrics": {
+            "ssim": 0.09837515745621571,
+            "psnr": 2.614000054116896,
+            "brightness_improvement": 1008.2108753345469,
+            "contrast_improvement": 626.4874993791681,
+            "original_brightness": 16.6783375,
+            "enhanced_brightness": 184.83115
+          },
+          "success": true
+        }
+      },
+      "improvement": {
+        "ssim": 0.11803038444953114,
+        "psnr": 18.95261484345819,
+        "brightness": -1108.210875334547,
+        "contrast": -726.4874993791681,
+        "time": -0.6864404678344727
+      }
+    },
+    {
+      "image": "488.png",
+      "results": {
+        "enhanced": {
+          "time": 0.19454383850097656,
+          "metrics": {
+            "ssim": 0.2945012925593923,
+            "psnr": 27.33784479223832,
+            "brightness_improvement": -100.0,
+            "contrast_improvement": -100.0,
+            "original_brightness": 7.903129166666667,
+            "enhanced_brightness": 0.0
+          },
+          "success": true
+        },
+        "original": {
+          "time": 0.06385350227355957,
+          "metrics": {
+            "ssim": 0.042987284700013194,
+            "psnr": 3.7603061007253946,
+            "brightness_improvement": 1802.5308540762599,
+            "contrast_improvement": 1084.1406450011384,
+            "original_brightness": 7.903129166666667,
+            "enhanced_brightness": 150.35947083333335
+          },
+          "success": true
+        }
+      },
+      "improvement": {
+        "ssim": 0.2515140078593791,
+        "psnr": 23.577538691512927,
+        "brightness": -1902.5308540762599,
+        "contrast": -1184.1406450011384,
+        "time": -0.130690336227417
+      }
+    },
+    {
+      "image": "252.png",
+      "results": {
+        "enhanced": {
+          "time": 0.17703652381896973,
+          "metrics": {
+            "ssim": 0.37972107693611523,
+            "psnr": 35.10461134853345,
+            "brightness_improvement": -100.0,
+            "contrast_improvement": -100.0,
+            "original_brightness": 3.8631625,
+            "enhanced_brightness": 0.0
+          },
+          "success": true
+        },
+        "original": {
+          "time": 0.053426265716552734,
+          "metrics": {
+            "ssim": 0.010690317090680438,
+            "psnr": 6.3842224303551465,
+            "brightness_improvement": 2764.9955401392854,
+            "contrast_improvement": 2620.09934980513,
+            "original_brightness": 3.8631625,
+            "enhanced_brightness": 110.67943333333334
+          },
+          "success": true
+        }
+      },
+      "improvement": {
+        "ssim": 0.3690307598454348,
+        "psnr": 28.72038891817831,
+        "brightness": -2864.9955401392854,
+        "contrast": -2720.09934980513,
+        "time": -0.12361025810241699
+      }
+    },
+    {
+      "image": "625.png",
+      "results": {
+        "enhanced": {
+          "time": 0.15121793746948242,
+          "metrics": {
+            "ssim": 0.04890261009026047,
+            "psnr": 19.739777801366778,
+            "brightness_improvement": -100.0,
+            "contrast_improvement": -100.0,
+            "original_brightness": 22.659791666666667,
+            "enhanced_brightness": 0.0
+          },
+          "success": true
+        },
+        "original": {
+          "time": 0.04740285873413086,
+          "metrics": {
+            "ssim": 0.14280843334831156,
+            "psnr": 1.4614267739293016,
+            "brightness_improvement": 927.285720852832,
+            "contrast_improvement": 308.88388370897735,
+            "original_brightness": 22.659791666666667,
+            "enhanced_brightness": 232.78080416666666
+          },
+          "success": true
+        }
+      },
+      "improvement": {
+        "ssim": -0.09390582325805108,
+        "psnr": 18.278351027437477,
+        "brightness": -1027.2857208528321,
+        "contrast": -408.88388370897735,
+        "time": -0.10381507873535156
+      }
+    },
+    {
+      "image": "566.png",
+      "results": {
+        "enhanced": {
+          "time": 0.18943357467651367,
+          "metrics": {
+            "ssim": 0.039593971259007016,
+            "psnr": 22.177387324009526,
+            "brightness_improvement": -100.0,
+            "contrast_improvement": -100.0,
+            "original_brightness": 16.596008333333334,
+            "enhanced_brightness": 0.0
+          },
+          "success": true
+        },
+        "original": {
+          "time": 0.05420804023742676,
+          "metrics": {
+            "ssim": 0.06919416865667855,
+            "psnr": 1.750597142870052,
+            "brightness_improvement": 1225.221074746387,
+            "contrast_improvement": 383.717531013286,
+            "original_brightness": 16.596008333333334,
+            "enhanced_brightness": 219.9338
+          },
+          "success": true
+        }
+      },
+      "improvement": {
+        "ssim": -0.02960019739767153,
+        "psnr": 20.426790181139474,
+        "brightness": -1325.221074746387,
+        "contrast": -483.717531013286,
+        "time": -0.13522553443908691
+      }
+    }
+  ],
+  "timestamp": "2026-03-16 17:04:41"
+}
